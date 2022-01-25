@@ -18,5 +18,5 @@ class FileIO{
     std::string getName() const {return className;}
 
     // Methods
-    readFile(std::string file);
+    void readFile(std::string file);
 };
