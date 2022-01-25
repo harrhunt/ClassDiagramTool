@@ -6,8 +6,8 @@
 
 
 // FileIO custom constructor taking in file name and listedFunction as well as className
-FileIO::FileIO(std::string file, std::std::vector<std::string> listedF, std::string classN):
-  fileName(file), listedF(listedFunctions), className(classN){
+FileIO::FileIO(std::string file, std::vector<std::string> listedF, std::string classN):
+  fileName(file), listedFunctions(listedF), className(classN){
     std::ifstream fileIn;
     fileIn.open(fileName, std::fstream::in);
     // Write a getter for the listed functions in the class

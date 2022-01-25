@@ -11,7 +11,7 @@ class FileIO{
 
   public:
     FileIO(std::string file, std::vector<std::string> listedF, std::string classN);
-    FileIO;
+    FileIO();
 
     //Getters
     std::vector<std::string> getFunctions() const {return listedFunctions;}
