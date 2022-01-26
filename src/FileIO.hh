@@ -4,16 +4,18 @@
 #include <vector>
 
 class FileIO{
-  private:
+private:
     std::string fileName;
-    std::string fileValues;
+    std::string fileContent;
 
-  public:
-    FileIO(std::ifstream fileN);
+public:
+    FileIO(std::string fileName);
     FileIO();
 
     //Getters
-    std::string getFileValues() const {return fileValues;}
+    std::string getFileValue() const {return fileContent;}
     std::string getFileName() const {return fileName;}
 
+    // Methods
+    void readFile(std::string file);
 };
