@@ -9,7 +9,7 @@ class FileIO{
     std::string fileValues;
 
   public:
-    FileIO(std::string fileV);
+    FileIO(std::ifstream fileN);
     FileIO();
 
     //Getters
