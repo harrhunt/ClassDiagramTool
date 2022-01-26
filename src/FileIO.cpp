@@ -6,12 +6,12 @@
 
 
 // FileIO custom constructor taking in file name
-FileIO::FileIO(std::ifstream fileN): fileName(fileN){
-    std::ifstream fileName;
+FileIO::FileIO(std::string fileN): fileName(fileN){
+    std::string fileName;
     fileIn.open(fileName, std::fstream::in);
-    // Write a getter for the listed functions in the class
+    fileValues = ((std::istreambuf_iterator<char>(fileName) ),
+                      (std::istreambuf_iterator<char>()));
 
-    // Write a getter for the class name
   }
 
 // FileIO default constructor taking in the default "class.cpp" file.
