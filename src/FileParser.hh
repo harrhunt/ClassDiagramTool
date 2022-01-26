@@ -3,14 +3,14 @@
 #include <vector>
 
 class FileParser{
-  private:
-    std::string fileIn;
+private:
+    std::string fileContents;
     std::vector<std::string> listedMethods;
     std::vector<std::string> listedFields;
     std::string className;
 
-  public:
-    FileParser(std::string fileIn, std::vector<std::string> listedM, std::string classN, std::std::vector<std::string> listedF);
+public:
+    FileParser(std::string fileContents);
     FileParser();
 
     //Getters
