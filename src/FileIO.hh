@@ -6,17 +6,14 @@
 class FileIO{
   private:
     std::string fileName;
-    std::vector<std::string> listedFunctions;
-    std::string className;
+    std::string fileValues;
 
   public:
-    FileIO(std::string file, std::vector<std::string> listedF, std::string classN);
+    FileIO(std::ifstream fileN);
     FileIO();
 
     //Getters
-    std::vector<std::string> getFunctions() const {return listedFunctions;}
-    std::string getName() const {return className;}
+    std::string getFileValues() const {return fileValues;}
+    std::string getFileName() const {return fileName;}
 
-    // Methods
-    void readFile(std::string file);
 };
