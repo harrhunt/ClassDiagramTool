@@ -12,16 +12,22 @@ template <class T>
 class Graph {
 public:
     Graph(){}
+
     void addNode(Node<T> node){
         nodes.push_back(node);
     }
-    void removeNode(){}
+
+    void removeNode(Node<T> node){
+        remove(nodes.begin(), nodes.end(), node);
+    }
 
     void addEdge(Edge<T> edge){
         edges.push_back(edge);
     }
 
-    void removeEdge(){}
+    void removeEdge(Node<Edge<T>> edge){
+        remove(edges.begin(), edges.end(), edge);
+    }
 
     vector<Node<T>> getNodes(){
         return nodes;

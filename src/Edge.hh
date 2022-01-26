@@ -20,17 +20,29 @@ public:
     Node<T> getStartNode(){
         return startNode;
     }
+    void setStartNode(Node<T> startNode){
+        this->startNode = startNode;
+    }
 
     Node<T> getEndNode(){
         return endNode;
+    }
+    void setEndNode(Node<T> endNode){
+        this->ndNode = endNode;
     }
 
     Type getType(){
         return type;
     }
+    void setType(Type type){
+        this->type = type;
+    }
 
     Multiplicity getMultiplicity(){
         return multiplicity;
+    }
+    void setMultiplicity(Multiplicity multiplicity){
+        this->multiplicity = multiplicity;
     }
 
 private:
