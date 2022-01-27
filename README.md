@@ -1,6 +1,5 @@
-# Class Diagram Tool
 [![CMake](https://github.com/harrhunt/ClassDiagramTool/actions/workflows/cmake.yml/badge.svg)](https://github.com/harrhunt/ClassDiagramTool/actions/workflows/cmake.yml)
-
+# Class Diagram Tool
 The Class Diagram Tool is meant to aide in the creation of UML diagrams from predefined projects. The tool takes in a source directory and associated header and source files to map classes, fields, and methods onto a graph according to their inheritance and multiplicity. This tool was built using C++ 20 standard using `windows.h` and `CMake`. 
 
 To utilize the tool, see [building, installing, and linking](Building, installing, and linking).
