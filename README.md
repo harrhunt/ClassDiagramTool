@@ -1,7 +1,7 @@
 # Class Diagram Tool
 The Class Diagram Tool is meant to aide in the creation of UML diagrams from predefined projects. The tool takes in a source directory and associated header and source files to map classes, fields, and methods onto a graph according to their inheritance and multiplicity. This tool was built using C++ 20 standard using `windows.h` and `CMake`. 
 
-To utilize the tool, see [building, installing, and linking](Building, installing, and linking.
+To utilize the tool, see [building, installing, and linking](Building, installing, and linking).
 
 ## How it works
 Given a source directory, the tool extracts the class name, methods, and functions using regex straight from the header file. It aggregates the classes and associated data into a vector of classes and maps them in a hash table according to their relations to other classes.
