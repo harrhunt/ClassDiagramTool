@@ -21,5 +21,5 @@ public:
 private:
     string name;
     vector<Field> fields;
-    vector<Method> methods
+    vector<Method> methods;
 };
