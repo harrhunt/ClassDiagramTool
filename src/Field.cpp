@@ -6,9 +6,10 @@
 #include  <iostream>
 using namespace std;
 
-Field::Field(string name, string type){
+Field::Field(string name, string type, string scope){
     Field::name = name;
     Field::type = type;
+    Field::scope = scope;
 }
 
 string Field::getName(){
@@ -23,5 +24,12 @@ string Field::getType(){
 }
 void Field::setType(string type) {
     Field::type = type;
+}
+
+string Field::getScope(){
+    return scope;
+}
+void Field::setScope(string scope) {
+    Field::scope = scope;
 }
 

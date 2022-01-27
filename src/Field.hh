@@ -7,14 +7,18 @@ using namespace std;
 
 class Field{
 public:
-    Field(string name, string type);
+    Field(string name, string type, string scope);
 
     string getName();
     void setName(string name);
 
     string getType();
     void setType(string type);
+
+    string getScope();
+    void setScope(string scope);
 private:
     string name;
     string type;
+    string scope;
 };
