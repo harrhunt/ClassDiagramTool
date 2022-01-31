@@ -5,14 +5,14 @@
 #include <vector>
 #include <sstream>
 
-class FileIO {
+class FileManager {
 private:
 //    std::string fileName;
 //    std::string fileContent;
 
 public:
-//    FileIO(std::string fileName);
-//    FileIO();
+//    FileManager(std::string fileName);
+//    FileManager();
 
     //Getters
 //    std::string getFileValue() const {return fileContent;}
