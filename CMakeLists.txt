@@ -9,8 +9,8 @@ include_directories(src)
 add_executable(ClassDiagramTool
         src/FileIO.cpp
         src/FileIO.hh
-        src/FileParser.cpp
-        src/FileParser.hh
+        src/ClassParser.cpp
+        src/ClassParser.hh
         src/main.cpp
         src/Graph.cpp
         src/Graph.hh
