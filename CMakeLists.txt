@@ -6,13 +6,6 @@ set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 include_directories(src)
 
-add_executable(ClassDiagramTool
-        src/FileIO.cpp
-        src/FileIO.hh
-        src/main.cpp
-        src/Graph.cpp
-        src/Graph.hh
-        src/Edge.cpp
-        src/Edge.hh
-        src/Node.cpp
-        src/Node.hh)
+add_subdirectory(src)
+add_subdirectory(tst)
+add_subdirectory(lib/googletest)
