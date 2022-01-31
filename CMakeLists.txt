@@ -7,8 +7,8 @@ set(CMAKE_EXE_LINKER_FLAGS "-static")
 include_directories(src)
 
 add_executable(ClassDiagramTool
-        src/FileIO.cpp
-        src/FileIO.hh
+        src/FileManager.cpp
+        src/FileManager.hh
         src/ClassParser.cpp
         src/ClassParser.hh
         src/main.cpp

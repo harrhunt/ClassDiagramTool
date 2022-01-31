@@ -1,9 +1,9 @@
 #include <iostream>
-#include "FileIO.hh"
+#include "FileManager.hh"
 #include "ClassParser.hh"
 
 int main(int argc, char const *argv[]) {
-    std::string testString = FileIO::readFile("test.h");
+    std::string testString = FileManager::readFile("test.h");
     ClassParser testClass(testString);
     testClass.parseClass();
 //  std::cout << testString << std::endl;
