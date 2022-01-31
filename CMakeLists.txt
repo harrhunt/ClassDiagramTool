@@ -26,5 +26,9 @@ add_executable(ClassDiagramTool
         src/Field.cpp
         src/Field.hh
         src/Method.cpp
+<<<<<<< HEAD
         src/Method.hh)
 >>>>>>> 7dfbed0 (updated cmakelists.txt)
+=======
+        src/Method.hh src/GraphBuilder.cpp src/GraphBuilder.hh)
+>>>>>>> 7bb4dbf (update CMakelists.txt)
