@@ -21,4 +21,4 @@ add_executable(ClassDiagramTool
         src/Field.cpp
         src/Field.hh
         src/Method.cpp
-        src/Method.hh)
+        src/Method.hh src/GraphBuilder.cpp src/GraphBuilder.hh)
