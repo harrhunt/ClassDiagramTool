@@ -12,8 +12,8 @@ add_subdirectory(tst)
 add_subdirectory(lib/googletest)
 =======
 add_executable(ClassDiagramTool
-        src/FileIO.cpp
-        src/FileIO.hh
+        src/FileManager.cpp
+        src/FileManager.hh
         src/ClassParser.cpp
         src/ClassParser.hh
         src/main.cpp
