@@ -23,6 +23,7 @@ cmake [-D[OPTION=ON/OFF]] ../
 # Build and install Class Diagram Tool
 make all
 ```
+To run the executables generated, the executables will be produced in the build directory associated with the original directory. For example, to run the source code, the file will be generated in `build/src/ClassDiagramTool_run` and the executable for the test functionality will be generated in `build/tst/ClassDiagramTool_tst`.
 
 ## Library Structure
 The repository is divided into several main directories:
