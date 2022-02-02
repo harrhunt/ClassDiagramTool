@@ -18,13 +18,6 @@ public:
 //    FileManager(std::string fileName);
 //    FileManager();
 
-
-    //Getters
-    std::string getFileValues() const {return fileValues;}
-    std::string getFileName() const {return fileName;}
-
-
-
     //Getters
 //    std::string getFileValue() const {return fileContent;}
 //    std::string getFileName() const {return fileName;}
