@@ -4,7 +4,9 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <filesystem>
 using namespace std;
+namespace fs = std::filesystem;
 
 class FileManager {
 private:
@@ -29,7 +31,11 @@ public:
 
     static vector<string> getFilePaths(string srcDirectory){
         vector<string> filePaths;
-
+        for (const auto & entry : fs::recursive_directory_iterator(srcDirectory)){
+            if (!entry.is_directory()){
+                filePaths.push_back(entry.path().string());
+            }
+        }
 
         return filePaths;
     }
