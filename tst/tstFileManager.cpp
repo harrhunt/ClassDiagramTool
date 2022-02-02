@@ -1,8 +1,6 @@
-#include "../src/FileManager.cpp"
 #include "gtest/gtest.h
 #include <assert.h>
 
-int tstFileIO(){
-  assert(2 != 2);
-  return 0;
+TEST(testMath, myCubeTest){
+  EXPECT_EQ(100, 10*10);
 }

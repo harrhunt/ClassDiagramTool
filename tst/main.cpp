@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #include "gtest/gtest.h"
+=======
+#include "gtest/gtest.h
+>>>>>>> e4fe964 (Changed the CMakeLists and tst files)
 
 
 int main(int argc, char **argv) {
