@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+using namespace std;
 
 class FileManager {
 private:
@@ -26,11 +27,17 @@ public:
 //    std::string getFileName() const {return fileName;}
 
     // Methods
-    static std::string readFile(std::string fileName) {
-        std::ifstream fileIn(fileName);
-        std::stringstream fileContents;
+    static string readFile(string fileName) {
+        ifstream fileIn(fileName);
+        stringstream fileContents;
         fileContents << fileIn.rdbuf();
         return fileContents.str();
     }
 
+    static vector<string> getFilePaths(string srcDirectory){
+        vector<string> filePaths;
+
+
+        return filePaths;
+    }
 };
