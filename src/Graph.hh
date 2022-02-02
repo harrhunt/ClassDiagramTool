@@ -16,6 +16,11 @@ public:
     void addNode(Node<T> node){
         nodes.push_back(node);
     }
+    void addNodes(vector<Node<T>> newNodes){
+        for (Node<T> node : newNodes){
+            addNode(node);
+        }
+    }
 
     void removeNode(Node<T> node){
         remove(nodes.begin(), nodes.end(), node);
@@ -23,6 +28,11 @@ public:
 
     void addEdge(Edge<T> edge){
         edges.push_back(edge);
+    }
+    void addEdges(vector<Edge<T>> newEdges){
+        for (Node<T> edge : newEdges){
+            addEdge(edge);
+        }
     }
 
     void removeEdge(Node<Edge<T>> edge){
