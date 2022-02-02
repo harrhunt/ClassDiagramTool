@@ -4,7 +4,10 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <filesystem>
+#include <regex>
 using namespace std;
+namespace fs = std::filesystem;
 
 class FileManager {
 private:
@@ -29,7 +32,11 @@ public:
 
     static vector<string> getFilePaths(string srcDirectory){
         vector<string> filePaths;
-
+        for (const auto & entry : fs::recursive_directory_iterator(srcDirectory)){
+            string path = entry.path().string();
+            if (!entry.is_directory() && regex_match(path, regex(".*(h|hh|hxx)")))
+                filePaths.push_back(path);
+        }
 
         return filePaths;
     }
