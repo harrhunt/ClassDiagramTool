@@ -21,8 +21,7 @@ cd build
 cmake [-D[OPTION=ON/OFF]] ../
 
 # Build and install Class Diagram Tool
-make -j
-make install
+make all
 ```
 
 ## Library Structure
