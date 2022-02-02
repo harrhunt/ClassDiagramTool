@@ -7,17 +7,27 @@
 #include "Method.hh"
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
-class ClassInfo{
+class ClassInfo {
 public:
     ClassInfo(string name);
 
     string getName();
+
     void setName(string name);
 
     void addField(Field field);
+
     void addMethod(Method method);
+
+    std::vector<Field> getFields();
+
+    std::vector<Method> getMethods();
+
+    void prettyPrint();
+
 private:
     string name;
     vector<Field> fields;
