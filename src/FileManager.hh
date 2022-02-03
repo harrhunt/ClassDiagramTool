@@ -32,8 +32,10 @@ public:
 
     static vector<string> getFilePaths(string srcDirectory){
         vector<string> filePaths;
+        cout << "I WAS HERE" << endl;
         for (const auto & entry : fs::recursive_directory_iterator(srcDirectory)){
             string path = entry.path().string();
+            cout << path << endl;
             if (!entry.is_directory() && regex_match(path, regex(".*(h|hh|hxx)")))
                 filePaths.push_back(path);
         }
