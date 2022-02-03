@@ -13,13 +13,13 @@ class GraphBuilder {
 public:
     static Graph<ClassInfo> build(string srcDirectory){
         Graph<ClassInfo> graph;
-        vector<string> paths = FileManager::getFilePaths(srcDirectory);
+        std::vector<string> paths = FileManager::getFilePaths(srcDirectory);
 
         for (string path : paths){
-            vector<ClassInfo> classInfos = ClassParser::parseClasses(path);
-            for (ClassInfo classInfo : classInfos){
-                Node<ClassInfo> node(classInfo);
-                graph.addNode(node);
+            std::vector<ClassInfo> classInfos = ClassParser::parseClasses(path);
+            for (auto &classInfo : classInfos){
+                //Node<ClassInfo> node(classInfo);
+                //graph.addNode(node);
             }
 
             //add edges

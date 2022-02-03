@@ -6,11 +6,10 @@
 #include "Field.hh"
 #include "Method.hh"
 #include <iostream>
+#include <string>
 #include <vector>
 
-using namespace std;
-
-ClassInfo::ClassInfo(string name) {
+ClassInfo::ClassInfo(std::string name) {
     ClassInfo::name = name;
 }
 
@@ -18,7 +17,7 @@ string ClassInfo::getName() {
     return name;
 }
 
-void ClassInfo::setName(string name) {
+void ClassInfo::setName(std::string name) {
     ClassInfo::name = name;
 }
 
