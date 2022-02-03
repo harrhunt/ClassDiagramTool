@@ -6,17 +6,18 @@
 #include "Field.hh"
 #include "Method.hh"
 #include <iostream>
+#include <string>
 #include <vector>
 
-using namespace std;
 
 class ClassInfo {
 public:
-    ClassInfo(string name);
+    ClassInfo();
+    ClassInfo(std::string name);
 
-    string getName();
+    std::string getName();
 
-    void setName(string name);
+    void setName(std::string name);
 
     void addField(Field field);
 
@@ -29,7 +30,7 @@ public:
     void prettyPrint();
 
 private:
-    string name;
-    vector<Field> fields;
-    vector<Method> methods;
+    std::string name;
+    std::vector<Field> fields;
+    std::vector<Method> methods;
 };

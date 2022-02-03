@@ -28,6 +28,8 @@ public:
         std::smatch classMatch;
         int startPosition = 0;
         int endPosition = 0;
+
+        // Find all the classes in the given piece of text
         while (std::regex_search(classContents, classMatch, classRegex)) {
             // Get the contents of the class that was matched and get the strings for it
             std::tie(startPosition, endPosition) = findMatchingMarks(classContents.substr(classMatch.position()));
@@ -40,7 +42,7 @@ public:
             // them into the parse methods and fields methods
             std::vector<std::tuple<std::string, std::string>> scopeSections = findScopeSections(classSection);
 
-            for (auto scopeSection: scopeSections) {
+            for (const auto& scopeSection: scopeSections) {
                 // Break out the scope and the text associated
                 std::string scope;
                 std::string scopeContents;
@@ -101,7 +103,7 @@ private:
         int count = -markOffset;
 
         // Get the textLength ahead of time to reduce length calls
-        int textLength = text.length();
+        unsigned long long textLength = text.length();
 
         // Find the position of the desired opening mark
         while (count < 1 && openPosition < textLength) {
@@ -132,8 +134,8 @@ private:
         std::string textCopy = text;
 
         // Initial variables for grabbing the first section of anything not in a specifier
-        int previousIndex = 0;
-        int indexOffset = 0;
+        unsigned long long previousIndex = 0;
+        unsigned long long indexOffset = 0;
 
         // No specifier defaults to private
         std::string scope = "private";
@@ -141,7 +143,7 @@ private:
         // Regex for 'public:', 'private:', and 'protected:' and add the previous section to the scopeSections
         while (std::regex_search(textCopy, scopeMatch, scopeRegex)) {
             // Calculate the current index relative to the original text file
-            int currentIndex = scopeMatch.position() + indexOffset;
+            unsigned long long currentIndex = scopeMatch.position() + indexOffset;
 
             // Add the substring that occurs from the start index of the previous match to 1 minus the index of the
             // current match
