@@ -16,15 +16,13 @@ public:
         vector<string> paths = FileManager::getFilePaths(srcDirectory);
 
         for (string path : paths){
-            /*ClassParser parser(FileManager::readFile(path));
-            //parser.parseClass();
-            ClassInfo classInfo(parser.getName());
-            //add fields and methods
+            vector<ClassInfo> classInfos = ClassParser::parseClasses(path);
+            for (ClassInfo classInfo : classInfos){
+                Node<ClassInfo> node(classInfo);
+                graph.addNode(node);
+            }
 
-            Node<ClassInfo> node(classInfo);
-            graph.addNode(node);
-
-            //add any relevant edges*/
+            //add edges
         }
 
         return graph;
