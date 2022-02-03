@@ -18,8 +18,8 @@ public:
         for (string path : paths){
             std::vector<ClassInfo> classInfos = ClassParser::parseClasses(path);
             for (auto &classInfo : classInfos){
-                //Node<ClassInfo> node(classInfo);
-                //graph.addNode(node);
+                Node<ClassInfo> node(classInfo);
+                graph.addNode(node);
             }
 
             //add edges
