@@ -4,26 +4,30 @@
 #pragma once
 
 #include <iostream>
-using namespace std;
 
-class Method{
+class Method {
 public:
-    Method(string name, string type, string scope, string parameters);
+    Method(std::string name, std::string type, std::string scope, std::string parameters);
 
-    string getName();
-    void setName(string name);
+    std::string getName();
 
-    string getType();
-    void setType(string type);
+    void setName(std::string name);
 
-    string getScope();
-    void setScope(string scope);
+    std::string getType();
 
-    string getParameters();
-    void setParameters(string parameters);
+    void setType(std::string type);
+
+    std::string getScope();
+
+    void setScope(std::string scope);
+
+    std::string getParameters();
+
+    void setParameters(std::string parameters);
+
 private:
-    string name;
-    string type;
-    string scope;
-    string parameters;
+    std::string name;
+    std::string type;
+    std::string scope;
+    std::string parameters;
 };

@@ -3,17 +3,18 @@
 //
 #pragma once
 
-template <class T>
+template<class T>
 class Node {
 public:
-    Node(T data){
+    Node(T data) {
         this->data = data;
     }
 
-    T getData(){
+    T getData() {
         return data;
     }
-    void setData(T data){
+
+    void setData(T data) {
         this->data = data;
     }
 

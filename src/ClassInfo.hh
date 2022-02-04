@@ -13,6 +13,7 @@
 class ClassInfo {
 public:
     ClassInfo();
+
     ClassInfo(std::string name);
 
     std::string getName();

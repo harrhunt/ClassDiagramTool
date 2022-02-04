@@ -42,7 +42,7 @@ public:
             // them into the parse methods and fields methods
             std::vector<std::tuple<std::string, std::string>> scopeSections = findScopeSections(classSection);
 
-            for (const auto& scopeSection: scopeSections) {
+            for (const auto &scopeSection: scopeSections) {
                 // Break out the scope and the text associated
                 std::string scope;
                 std::string scopeContents;

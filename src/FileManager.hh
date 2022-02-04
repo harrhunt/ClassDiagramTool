@@ -6,8 +6,6 @@
 #include <sstream>
 #include <filesystem>
 #include <regex>
-using namespace std;
-namespace fs = std::filesystem;
 
 class FileManager {
 private:
@@ -23,18 +21,18 @@ public:
 //    std::string getFileName() const {return fileName;}
 
     // Methods
-    static string readFile(string fileName) {
-        ifstream fileIn(fileName);
-        stringstream fileContents;
+    static std::string readFile(std::string fileName) {
+        std::ifstream fileIn(fileName);
+        std::stringstream fileContents;
         fileContents << fileIn.rdbuf();
         return fileContents.str();
     }
 
-    static vector<string> getFilePaths(string srcDirectory){
-        vector<string> filePaths;
-        for (const auto & entry : fs::recursive_directory_iterator(srcDirectory)){
-            string path = entry.path().string();
-            if (!entry.is_directory() && regex_match(path, regex(".*(h|hh|hxx)")))
+    static std::vector<std::string> getFilePaths(std::string srcDirectory) {
+        std::vector<std::string> filePaths;
+        for (const auto &entry: std::filesystem::recursive_directory_iterator(srcDirectory)) {
+            std::string path = entry.path().string();
+            if (!entry.is_directory() && regex_match(path, std::regex(".*(h|hh|hxx)")))
                 filePaths.push_back(path);
         }
 

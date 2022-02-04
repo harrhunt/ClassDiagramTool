@@ -9,11 +9,13 @@
 #include <string>
 #include <vector>
 
+ClassInfo::ClassInfo() = default;
+
 ClassInfo::ClassInfo(std::string name) {
     ClassInfo::name = name;
 }
 
-string ClassInfo::getName() {
+std::string ClassInfo::getName() {
     return name;
 }
 
@@ -62,3 +64,5 @@ void ClassInfo::prettyPrint() {
     std::cout << "``````````````````````````" << std::endl;
     std::cout << std::endl << std::endl;
 }
+
+
