@@ -103,7 +103,7 @@ private:
         int count = -markOffset;
 
         // Get the textLength ahead of time to reduce length calls
-        unsigned long long textLength = text.length();
+        long long textLength = text.length();
 
         // Find the position of the desired opening mark
         while (count < 1 && openPosition < textLength) {
