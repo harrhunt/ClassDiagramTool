@@ -72,6 +72,19 @@ private:
         while (std::regex_search(sectionContents, methodMatch, methodRegex)) {
             classInfo.addMethod(Method(methodMatch[2], methodMatch[1], scope, methodMatch[3]));
             sectionContents = methodMatch.suffix().str();
+
+            // If the method has a body (opening and closing curly braces)...
+            int i = 0;
+            while (sectionContents[i] == ' ' || sectionContents[i] == '\n') {
+                i++;
+            }
+
+            // find the body section and remove it from the search string
+            if (sectionContents[i] == '{') {
+                int closingMarkIndex;
+                std::tie(std::ignore, closingMarkIndex) = findMatchingMarks(sectionContents);
+                sectionContents = sectionContents.substr(closingMarkIndex, sectionContents.length() - closingMarkIndex + 1);
+            }
         }
     }
 
