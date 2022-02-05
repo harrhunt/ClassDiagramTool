@@ -3,7 +3,7 @@
 #include "ClassParser.hh"
 
 int main(int argc, char const *argv[]) {
-    std::vector<std::string> paths = FileManager::getFilePaths(R"(C:\Users\RockP\CLionProjects\ClassDiagramTool\src)");
+    std::vector<std::string> paths = FileManager::getFilePaths("../../src");
     std::string testString = FileManager::readFile("test.h");
     std::vector<ClassInfo> classes = ClassParser::parseClasses(testString);
     for (ClassInfo classInfo : classes) {
