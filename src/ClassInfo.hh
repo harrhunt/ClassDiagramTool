@@ -9,7 +9,8 @@
 #include <string>
 #include <vector>
 
-
+/// Holds necessary class data for the Class Diagram
+/// Contains a name and vectors of Fields and Methods
 class ClassInfo {
 public:
     ClassInfo();

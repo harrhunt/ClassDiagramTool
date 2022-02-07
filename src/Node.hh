@@ -3,6 +3,8 @@
 //
 #pragma once
 
+/// Generic Node class for the Graph data structure
+/// Stores data of any type
 template<class T>
 class Node {
 public:
@@ -13,7 +15,6 @@ public:
     T getData() {
         return data;
     }
-
     void setData(T data) {
         this->data = data;
     }

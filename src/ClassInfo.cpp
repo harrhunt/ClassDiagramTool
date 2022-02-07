@@ -10,6 +10,9 @@
 #include <string>
 #include <vector>
 
+/// Holds necessary class data for the Class Diagram
+/// Contains a name and vectors of Fields and Methods
+
 ClassInfo::ClassInfo() = default;
 
 ClassInfo::ClassInfo(std::string name) {

@@ -7,6 +7,8 @@
 #include "Edge.hh"
 #include <vector>
 
+/// Generic Graph data structure
+/// Contains a vector of Nodes and Edges
 template<class T>
 class Graph {
 public:

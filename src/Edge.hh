@@ -2,9 +2,10 @@
 // Created by Davis on 1/26/2022.
 //
 #pragma once
-
 #include "Node.hh"
 
+/// Generic Edge class for the Graph data structure
+/// Contains a startNode and endNode, as well as type and multiplicity
 template<class T>
 class Edge {
 public:
@@ -15,6 +16,7 @@ public:
         ONE_TO_ONE, ONE_TO_MANY, MANY_TO_ONE, MANY_TO_MANY
     };
 
+    Edge();
     Edge(Node<T> startNode, Node<T> endNode, Type type, Multiplicity multiplicity) {
         this->startNode = startNode;
         this->endNode = endNode;
@@ -25,7 +27,6 @@ public:
     Node<T> getStartNode() {
         return startNode;
     }
-
     void setStartNode(Node<T> startNode) {
         this->startNode = startNode;
     }
@@ -33,7 +34,6 @@ public:
     Node<T> getEndNode() {
         return endNode;
     }
-
     void setEndNode(Node<T> endNode) {
         this->ndNode = endNode;
     }
@@ -41,7 +41,6 @@ public:
     Type getType() {
         return type;
     }
-
     void setType(Type type) {
         this->type = type;
     }
@@ -49,7 +48,6 @@ public:
     Multiplicity getMultiplicity() {
         return multiplicity;
     }
-
     void setMultiplicity(Multiplicity multiplicity) {
         this->multiplicity = multiplicity;
     }

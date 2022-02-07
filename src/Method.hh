@@ -2,8 +2,10 @@
 // Created by Davis on 1/26/2022.
 //
 #pragma once
+#include <string>
 
-#include <iostream>
+/// Stores information about a class' method
+/// Includes method name, return type, scope, and parameters
 
 class Method {
 public:

@@ -3,40 +3,42 @@
 //
 
 #include "Method.hh"
-#include  <iostream>
-using namespace std;
+#include  <string>
 
-Method::Method(string name, string type, string scope, string parameters){
+/// Stores information about a class' method
+/// Includes method name, return type, scope, and parameters
+
+Method::Method(std::string name, std::string type, std::string scope, std::string parameters){
     Method::name = name;
     Method::type = type;
     Method::scope = scope;
     Method::parameters = parameters;
 }
 
-string Method::getName(){
+std::string Method::getName(){
     return name;
 }
-void Method::setName(string name){
+void Method::setName(std::string name){
     Method::name = name;
 }
 
-string Method::getType(){
+std::string Method::getType(){
     return type;
 }
-void Method::setType(string type) {
+void Method::setType(std::string type) {
     Method::type = type;
 }
 
-string Method::getScope(){
+std::string Method::getScope(){
     return scope;
 }
-void Method::setScope(string scope) {
+void Method::setScope(std::string scope) {
     Method::scope = scope;
 }
 
-string Method::getParameters(){
+std::string Method::getParameters(){
     return parameters;
 }
-void Method::setParameters(string parameters){
+void Method::setParameters(std::string parameters){
     Method::parameters = parameters;
 }
