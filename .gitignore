@@ -43,3 +43,5 @@
 
 #Cmake
 cmake-build-debug
+*.layout
+Makefile.win
