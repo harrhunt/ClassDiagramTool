@@ -1,6 +1,8 @@
 //
 // Created by Davis on 1/26/2022.
+// src/Edge.hh
 //
+
 #pragma once
 #include "Node.hh"
 
@@ -9,9 +11,12 @@
 template<class T>
 class Edge {
 public:
+
+    /// Describe the type of relationship between classes
     enum Type {
         ASSOCIATION, AGGREGATION, COMPOSITION, INHERITANCE, IMPLEMENTATION
     };
+    /// Describe the multiplicity of the relationship between classes
     enum Multiplicity {
         ONE_TO_ONE, ONE_TO_MANY, MANY_TO_ONE, MANY_TO_MANY
     };
@@ -24,6 +29,7 @@ public:
         this->multiplicity = multiplicity;
     }
 
+    //getters and setters
     Node<T> getStartNode() {
         return startNode;
     }

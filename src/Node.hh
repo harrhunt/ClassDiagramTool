@@ -1,6 +1,8 @@
 //
 // Created by Davis on 1/26/2022.
+// src/Node.hh
 //
+
 #pragma once
 
 /// Generic Node class for the Graph data structure
@@ -12,6 +14,7 @@ public:
         this->data = data;
     }
 
+    //Getters and setters
     T getData() {
         return data;
     }

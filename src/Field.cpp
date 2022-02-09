@@ -1,5 +1,6 @@
 //
 // Created by Davis on 1/26/2022.
+// src/Field.cpp
 //
 
 #include "Field.hh"
@@ -14,6 +15,7 @@ Field::Field(std::string name, std::string type, std::string scope){
     Field::scope = scope;
 }
 
+//getters and setters
 std::string Field::getName(){
     return name;
 }

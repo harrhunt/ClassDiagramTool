@@ -1,5 +1,6 @@
 //
-// Created by Davis on 1/26/2022.
+// Davis Bolt and Hunter Harris
+// src/ClassInfo.cpp
 //
 
 #include "ClassInfo.hh"
@@ -19,20 +20,20 @@ ClassInfo::ClassInfo(std::string name) {
     ClassInfo::name = name;
 }
 
-std::string ClassInfo::getName() {
-    return name;
-}
-
-void ClassInfo::setName(std::string name) {
-    ClassInfo::name = name;
-}
-
+//add fields and methods
 void ClassInfo::addField(Field field) {
     fields.push_back(field);
 }
-
 void ClassInfo::addMethod(Method method) {
     methods.push_back(method);
+}
+
+// getters and setters
+std::string ClassInfo::getName() {
+    return name;
+}
+void ClassInfo::setName(std::string name) {
+    ClassInfo::name = name;
 }
 
 std::vector<Field> ClassInfo::getFields() {
@@ -43,6 +44,7 @@ std::vector<Method> ClassInfo::getMethods() {
     return methods;
 }
 
+/// Neatly prints the the info of the class
 void ClassInfo::prettyPrint() {
     std::cout << "==========================" << std::endl;
     std::cout << getName() << std::endl;

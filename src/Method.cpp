@@ -1,5 +1,6 @@
 //
 // Created by Davis on 1/26/2022.
+// src/Method.cpp
 //
 
 #include "Method.hh"
@@ -15,6 +16,7 @@ Method::Method(std::string name, std::string type, std::string scope, std::strin
     Method::parameters = parameters;
 }
 
+//Getters and setters
 std::string Method::getName(){
     return name;
 }
