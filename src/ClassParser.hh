@@ -1,6 +1,9 @@
-//
-// Authored by Patience and Hunter
-//
+///
+/// \Authors Hunter, Patience
+/// \file src/ClassParser.hh
+/// \note A class parser that uses static methods to take in a string, parse the string for classes, methods, and fields
+///       and return what is parsed as a vector of ClassInfo objects filled with Method and Field objects.
+///
 
 #pragma once
 
