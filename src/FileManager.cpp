@@ -1,15 +1,5 @@
-#include <fstream>
-#include <iostream>
-#include <string>
-#include "FileManager.hh"
-#include <sstream>
-
-
-// FileManager custom constructor taking in file name and listedFunction as well as className
-//FileManager::FileManager(std::string fileName) : fileName(fileName) {
-//}
-
-// FileManager default constructor taking in the default "class.cpp" file.
-
-// read method allows for more flexibility in definition through only requiring the file.
-// this method should not be used for appending the listedFunctions.
+///
+/// \Authors Patience
+/// \file src/FileManager.cpp
+/// \note The implementation file for the file manager class. Is empty for now since all methods are currently static.
+///

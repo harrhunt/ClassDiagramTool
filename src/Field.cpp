@@ -1,35 +1,39 @@
 //
 // Created by Davis on 1/26/2022.
+// src/Field.cpp
 //
 
 #include "Field.hh"
-#include  <iostream>
-using namespace std;
+#include  <string>
 
-Field::Field(string name, string type, string scope){
+/// Stores info about a class' field
+/// Includes name, type, and scope
+
+Field::Field(std::string name, std::string type, std::string scope){
     Field::name = name;
     Field::type = type;
     Field::scope = scope;
 }
 
-string Field::getName(){
+//getters and setters
+std::string Field::getName(){
     return name;
 }
-void Field::setName(string name){
+void Field::setName(std::string name){
     Field::name = name;
 }
 
-string Field::getType(){
+std::string Field::getType(){
     return type;
 }
-void Field::setType(string type) {
+void Field::setType(std::string type) {
     Field::type = type;
 }
 
-string Field::getScope(){
+std::string Field::getScope(){
     return scope;
 }
-void Field::setScope(string scope) {
+void Field::setScope(std::string scope) {
     Field::scope = scope;
 }
 

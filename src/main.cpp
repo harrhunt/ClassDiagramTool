@@ -1,3 +1,9 @@
+///
+/// \Authors Hunter, Patience, Davis
+/// \file src/main.cpp
+/// \note The main entry point for our program. Currently it scans and attempts to parse the source files for this project.
+///
+
 #include <iostream>
 #include "FileManager.hh"
 #include "ClassParser.hh"
