@@ -1,3 +1,9 @@
+///
+/// \Authors Hunter, Davis, Patience
+/// \file src/FileManager.hh
+/// \note A file manager with static methods for listing directories of files and reading in files as strings
+///
+
 #pragma once
 
 #include <fstream>
