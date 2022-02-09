@@ -1,19 +1,24 @@
 //
 // Created by Davis on 1/26/2022.
+// src/Node.hh
 //
+
 #pragma once
 
-template <class T>
+/// Generic Node class for the Graph data structure
+/// Stores data of any type
+template<class T>
 class Node {
 public:
-    Node(T data){
+    Node(T data) {
         this->data = data;
     }
 
-    T getData(){
+    //Getters and setters
+    T getData() {
         return data;
     }
-    void setData(T data){
+    void setData(T data) {
         this->data = data;
     }
 

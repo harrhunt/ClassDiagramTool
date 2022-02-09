@@ -1,5 +1,10 @@
 //
 // Created by Davis on 1/26/2022.
+// src/Graph.cpp
 //
 
-#include "graph.hh"
+#include "Graph.hh"
+
+/// Generic Graph data structure
+/// Contains vectors of Nodes and Edges
+/// Methods are implemented in the header since it is a template class

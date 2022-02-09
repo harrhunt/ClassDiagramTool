@@ -30,9 +30,18 @@
 *.exe
 *.out
 *.app
+*.o
 
 # JetBrains
 .idea
 
+# Ignore the build directory
+/dist
+/build
+/public
+/out
+
 #Cmake
 cmake-build-debug
+*.layout
+Makefile.win
