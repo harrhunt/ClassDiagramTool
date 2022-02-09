@@ -10,6 +10,16 @@ Given a source directory, the tool extracts the class name, methods, and functio
 (Insert diagram here potentially)
 
 ## Building, installing, and linking
+
+### Dev-C++
+
+1. Open `ClassDiagramTool.dev` in Dev-C++
+2. Enable additional compiler flags by going to `Tools->Compiler Options` and checking "Add the following commands when calling the compiler"
+3. Add the following compiler flag to the text box:
+   1. `-std=c++17`
+4. Compile and run using `<F9>` and `<F10>` respectively.
+
+### CMake
 The Class Diagram Tool uses `CMake` to allow cross-platform builds. Traditional `CMake` commands work when building.
 
 ```shell
