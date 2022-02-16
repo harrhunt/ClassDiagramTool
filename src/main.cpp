@@ -1,226 +1,171 @@
-// #include <iostream>
-// #include "FileManager.hh"
-// #include "ClassParser.hh"
+// Dear ImGui: standalone example application for SDL2 + OpenGL
+// (SDL is a cross-platform general purpose library for handling windows, inputs, OpenGL/Vulkan/Metal graphics context creation, etc.)
+// If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
+// Read online: https://github.com/ocornut/imgui/tree/master/docs
 
-// int main(int argc, char const *argv[]) {
-//     std::vector<std::string> paths = FileManager::getFilePaths("../../src");
-//     std::string testString = FileManager::readFile("test.h");
-//     std::vector<ClassInfo> classes = ClassParser::parseClasses(testString);
-//     for (ClassInfo classInfo : classes) {
-//         classInfo.prettyPrint();
-//     }
-//     for (const std::string& path : paths) {
-//         std::cout << path << std::endl;
-//     }
-//     return 0;
-// }
-
-// C++
-#include <vector>
-// SDL
-#include <glad/glad.h>
+ #include "imgui.h"
+// #include "lib/imgui/imgui_impl_sdl.h"
+// #include "imgui_impl_opengl3.h"
+#include <stdio.h>
 #include <SDL.h>
-// Dear ImGui
-#include "imgui-style.h"
-#include "imgui_impl_sdl.h"
-#include "imgui_impl_opengl3.h"
+#if defined(IMGUI_IMPL_OPENGL_ES2)
+#include <SDL_opengles2.h>
+#else
+#include <SDL_opengl.h>
+#endif
 
-#include "functions.h"
-
-int windowWidth = 1280,
-    windowHeight = 720;
-
-int main(int argc, char *argv[])
+// Main code
+int main(int, char**)
 {
-    // ...
-
-    // initiate SDL
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
+    // Setup SDL
+    // (Some versions of SDL before <2.0.10 appears to have performance/stalling issues on a minority of Windows systems,
+    // depending on whether SDL_INIT_GAMECONTROLLER is enabled or disabled.. updating to latest version of SDL is recommended!)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
     {
-        printf("[ERROR] %s\n", SDL_GetError());
+        printf("Error: %s\n", SDL_GetError());
         return -1;
     }
 
-    // set OpenGL attributes
+    // Decide GL+GLSL versions
+#if defined(IMGUI_IMPL_OPENGL_ES2)
+    // GL ES 2.0 + GLSL 100
+    const char* glsl_version = "#version 100";
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+#elif defined(__APPLE__)
+    // GL 3.2 Core + GLSL 150
+    const char* glsl_version = "#version 150";
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG); // Always required on Mac
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+#else
+    // GL 3.0 + GLSL 130
+    const char* glsl_version = "#version 130";
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+#endif
+
+    // Create window with graphics context
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-
-    SDL_GL_SetAttribute(
-        SDL_GL_CONTEXT_PROFILE_MASK,
-        SDL_GL_CONTEXT_PROFILE_CORE
-        );
-
-    std::string glsl_version = "";
-#ifdef __APPLE__
-    // GL 3.2 Core + GLSL 150
-    glsl_version = "#version 150";
-    SDL_GL_SetAttribute( // required on Mac OS
-        SDL_GL_CONTEXT_FLAGS,
-        SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG
-        );
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-#elif __linux__
-    // GL 3.2 Core + GLSL 150
-    glsl_version = "#version 150";
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-#elif _WIN32
-    // GL 3.0 + GLSL 130
-    glsl_version = "#version 130";
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-#endif
-
-    SDL_WindowFlags window_flags = (SDL_WindowFlags)(
-        SDL_WINDOW_OPENGL
-        | SDL_WINDOW_RESIZABLE
-        | SDL_WINDOW_ALLOW_HIGHDPI
-        );
-    SDL_Window *window = SDL_CreateWindow(
-        "Dear ImGui SDL",
-        SDL_WINDOWPOS_CENTERED,
-        SDL_WINDOWPOS_CENTERED,
-        windowWidth,
-        windowHeight,
-        window_flags
-        );
-    // limit to which minimum size user can resize the window
-    SDL_SetWindowMinimumSize(window, 500, 300);
-
+    SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
+    SDL_Window* window = SDL_CreateWindow("Dear ImGui SDL2+OpenGL3 example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
     SDL_GLContext gl_context = SDL_GL_CreateContext(window);
     SDL_GL_MakeCurrent(window, gl_context);
+    SDL_GL_SetSwapInterval(1); // Enable vsync
 
-    // enable VSync
-    SDL_GL_SetSwapInterval(1);
-
-    if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
-    {
-        std::cerr << "[ERROR] Couldn't initialize glad" << std::endl;
-    }
-    else
-    {
-        std::cout << "[INFO] glad initialized\n";
-    }
-
-    glViewport(0, 0, windowWidth, windowHeight);
-
-    // setup Dear ImGui context
+    // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
-    // setup Dear ImGui style
+    // Setup Dear ImGui style
     ImGui::StyleColorsDark();
+    //ImGui::StyleColorsClassic();
 
-    // setup platform/renderer bindings
+    // Setup Platform/Renderer backends
     ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
-    ImGui_ImplOpenGL3_Init(glsl_version.c_str());
+    ImGui_ImplOpenGL3_Init(glsl_version);
 
-    // colors are set in RGBA, but as float
-    ImVec4 background = ImVec4(35/255.0f, 35/255.0f, 35/255.0f, 1.00f);
+    // Load Fonts
+    // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
+    // - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
+    // - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
+    // - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
+    // - Read 'docs/FONTS.md' for more instructions and details.
+    // - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
+    //io.Fonts->AddFontDefault();
+    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
+    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
+    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
+    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
+    //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
+    //IM_ASSERT(font != NULL);
 
-    glClearColor(background.x, background.y, background.z, background.w);
-    bool loop = true;
-    while (loop)
+    // Our state
+    bool show_demo_window = true;
+    bool show_another_window = false;
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+    // Main loop
+    bool done = false;
+    while (!done)
     {
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
+        // Poll and handle events (inputs, window resize, etc.)
+        // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
+        // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
+        // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
+        // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
-            // without it you won't have keyboard input and other things
             ImGui_ImplSDL2_ProcessEvent(&event);
-            // you might also want to check io.WantCaptureMouse and io.WantCaptureKeyboard
-            // before processing events
-
-            switch (event.type)
-            {
-            case SDL_QUIT:
-                loop = false;
-                break;
-
-            case SDL_WINDOWEVENT:
-                switch (event.window.event)
-                {
-                case SDL_WINDOWEVENT_RESIZED:
-                    windowWidth = event.window.data1;
-                    windowHeight = event.window.data2;
-                    // std::cout << "[INFO] Window size: "
-                    //           << windowWidth
-                    //           << "x"
-                    //           << windowHeight
-                    //           << std::endl;
-                    glViewport(0, 0, windowWidth, windowHeight);
-                    break;
-                }
-                break;
-
-            case SDL_KEYDOWN:
-                switch (event.key.keysym.sym)
-                {
-                case SDLK_ESCAPE:
-                    loop = false;
-                    break;
-                }
-                break;
-            }
+            if (event.type == SDL_QUIT)
+                done = true;
+            if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window))
+                done = true;
         }
 
-        // start the Dear ImGui frame
+        // Start the Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplSDL2_NewFrame(window);
+        ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
 
-        // a window is defined by Begin/End pair
+        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+        if (show_demo_window)
+            ImGui::ShowDemoWindow(&show_demo_window);
+
+        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
         {
+            static float f = 0.0f;
             static int counter = 0;
-            // get the window size as a base for calculating widgets geometry
-            int sdl_width = 0, sdl_height = 0, controls_width = 0;
-            SDL_GetWindowSize(window, &sdl_width, &sdl_height);
-            controls_width = sdl_width;
-            // make controls widget width to be 1/3 of the main window width
-            if ((controls_width /= 3) < 300) { controls_width = 300; }
 
-            // position the controls widget in the top-right corner with some margin
-            ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Always);
-            // here we set the calculated width and also make the height to be
-            // be the height of the main window also with some margin
-            ImGui::SetNextWindowSize(
-                ImVec2(static_cast<float>(controls_width), static_cast<float>(sdl_height - 20)),
-                ImGuiCond_Always
-                );
-            // create a window and append into it
-            ImGui::Begin("Controls", NULL, ImGuiWindowFlags_NoResize);
+            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
 
-            ImGui::Dummy(ImVec2(0.0f, 1.0f));
-            ImGui::TextColored(ImVec4(1.0f, 0.0f, 1.0f, 1.0f), "Platform");
-            ImGui::Text("%s", SDL_GetPlatform());
-            ImGui::Text("CPU cores: %d", SDL_GetCPUCount());
-            ImGui::Text("RAM: %.2f GB", SDL_GetSystemRAM() / 1024.0f);
+            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+            ImGui::Checkbox("Another Window", &show_another_window);
 
-            // buttons and most other widgets return true when clicked/edited/activated
-            if (ImGui::Button("Counter button"))
-            {
-                std::cout << "counter button clicked\n";
+            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+
+            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
                 counter++;
-            }
             ImGui::SameLine();
             ImGui::Text("counter = %d", counter);
 
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             ImGui::End();
         }
 
-        // rendering
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        // 3. Show another simple window.
+        if (show_another_window)
+        {
+            ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+            ImGui::Text("Hello from another window!");
+            if (ImGui::Button("Close Me"))
+                show_another_window = false;
+            ImGui::End();
+        }
 
+        // Rendering
+        ImGui::Render();
+        glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
+        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+        glClear(GL_COLOR_BUFFER_BIT);
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         SDL_GL_SwapWindow(window);
     }
 
+    // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
@@ -229,5 +174,5 @@ int main(int argc, char *argv[])
     SDL_DestroyWindow(window);
     SDL_Quit();
 
-    // ...
+    return 0;
 }
