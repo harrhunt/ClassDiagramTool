@@ -4,7 +4,7 @@
 // Read online: https://github.com/ocornut/imgui/tree/master/docs
 
  #include "imgui.h"
-// #include "lib/imgui/imgui_impl_sdl.h"
+// #include "imgui_impl_sdl.h"
 // #include "imgui_impl_opengl3.h"
 #include <stdio.h>
 #include <SDL.h>
