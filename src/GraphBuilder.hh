@@ -20,15 +20,19 @@ public:
     /// Edges to represent class diagram
     /// \param srcDirectory The path to the c++ project's source directory
     /// \return The graph data structure contain nodes with class information
-    static Graph<ClassInfo> build(std::string srcDirectory) {
+    static Graph<ClassInfo> build(std::string srcDirectory, bool recursive) {
         Graph<ClassInfo> graph;
-        std::vector<std::string> paths = FileManager::getFilePaths(srcDirectory);
+        std::vector<std::string> paths = FileManager::getFilePaths(srcDirectory, recursive);
 
+        int ID = 0;
         for (std::string path: paths) {
-            std::vector<ClassInfo> classInfos = ClassParser::parseClasses(path);
+            std::string fileContents = FileManager::readFile(path);
+            std::vector<ClassInfo> classInfos = ClassParser::parseClasses(fileContents);
             for (auto &classInfo: classInfos) {
-                Node<ClassInfo> node(classInfo);
+                Node<ClassInfo> node(ID, classInfo);
                 graph.addNode(node);
+
+                ID++;
             }
 
             //add edges

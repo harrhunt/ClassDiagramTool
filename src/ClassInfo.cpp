@@ -27,6 +27,9 @@ void ClassInfo::addField(Field field) {
 void ClassInfo::addMethod(Method method) {
     methods.push_back(method);
 }
+void ClassInfo::addBase(std::string base) {
+    bases.push_back(base);
+}
 
 // getters and setters
 std::string ClassInfo::getName() {
@@ -44,6 +47,10 @@ std::vector<Method> ClassInfo::getMethods() {
     return methods;
 }
 
+std::vector<std::string> ClassInfo::getBases() {
+    return bases;
+}
+
 /// Neatly prints the the info of the class
 void ClassInfo::prettyPrint() {
     std::cout << "==========================" << std::endl;
@@ -58,13 +65,13 @@ void ClassInfo::prettyPrint() {
     unsigned long long parameterWidth = 0;
     for (Method method: getMethods()) {
         scopeWidth = scopeWidth < method.getScope().length() ? method.getScope().length() : scopeWidth;
-        typeWidth = typeWidth < method.getType().length() ? method.getType().length() : typeWidth;
+        typeWidth = typeWidth < method.getType().toString().length() ? method.getType().toString().length() : typeWidth;
         nameWidth = nameWidth < method.getName().length() ? method.getName().length() : nameWidth;
         parameterWidth = parameterWidth < method.getParameters().length() ? method.getParameters().length() : parameterWidth;
     }
     for (Method method: getMethods()) {
         std::cout << std::setw(scopeWidth + 2) << std::left << method.getScope() << " ";
-        std::cout << std::setw(typeWidth + 2) << std::left << method.getType() << " ";
+        std::cout << std::setw(typeWidth + 2) << std::left << method.getType().toString() << " ";
         std::cout << std::setw(nameWidth + 2) << std::left << method.getName() << " ";
         std::cout << std::setw(parameterWidth + 2) << std::left << method.getParameters() << std::endl;
     }
@@ -77,12 +84,12 @@ void ClassInfo::prettyPrint() {
     nameWidth = 0;
     for (Field field: getFields()) {
         scopeWidth = scopeWidth < field.getScope().length() ? field.getScope().length() : scopeWidth;
-        typeWidth = typeWidth < field.getType().length() ? field.getType().length() : typeWidth;
+        typeWidth = typeWidth < field.getType().toString().length() ? field.getType().toString().length() : typeWidth;
         nameWidth = nameWidth < field.getName().length() ? field.getName().length() : nameWidth;
     }
     for (Field field: getFields()) {
         std::cout << std::setw(scopeWidth + 2) << std::left << field.getScope() << " ";
-        std::cout << std::setw(typeWidth + 2) << std::left << field.getType() << " ";
+        std::cout << std::setw(typeWidth + 2) << std::left << field.getType().toString() << " ";
         std::cout << std::setw(nameWidth + 2) << std::left << field.getName() << std::endl;
     }
     std::cout << "``````````````````````````" << std::endl;

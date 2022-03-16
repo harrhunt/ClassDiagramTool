@@ -10,11 +10,19 @@
 template<class T>
 class Node {
 public:
-    Node(T data) {
+    Node(int ID, T data) {
+        this->ID = ID;
         this->data = data;
     }
 
     //Getters and setters
+    int getID() {
+        return ID;
+    }
+    void setID(int ID) {
+        this->ID = ID;
+    }
+    
     T getData() {
         return data;
     }
@@ -23,5 +31,6 @@ public:
     }
 
 private:
+    int ID;
     T data;
 };

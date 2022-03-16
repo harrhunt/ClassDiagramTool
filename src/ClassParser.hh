@@ -9,10 +9,12 @@
 
 #include <string>
 #include <vector>
+#include <set>
 #include <regex>
 #include "ClassInfo.hh"
 #include "Method.hh"
 #include "Field.hh"
+#include "Type.hh"
 
 
 class ClassParser {
@@ -21,6 +23,11 @@ private:
     static std::regex methodRegex;
     static std::regex fieldRegex;
     static std::regex scopeRegex;
+    static std::regex typeRegex;
+    static std::regex commentRegex;
+    static std::regex inheritanceRegex;
+
+    static std::set<std::string> collectionTypes;
 
 public:
     /// Parses a the given string for classes and their methods and fields and returns a vector of all the classes found.
@@ -32,6 +39,8 @@ public:
         int startPosition = 0;
         int endPosition = 0;
 
+        classContents = removeComments(classContents);
+
         // Find all the classes in the given piece of text
         while (std::regex_search(classContents, classMatch, classRegex)) {
             // Get the contents of the class that was matched and get the strings for it
@@ -40,6 +49,12 @@ public:
 
             // Create the class that was found
             ClassInfo classInfo(classMatch[1]);
+            
+            // Get the inheritances from the class match
+            parseInheritance(classMatch[2], classInfo);
+            for (const std::string &base: classInfo.getBases()) {
+                std::cout << base << std::endl;
+            }
 
             // Breaks the class sections into public, private, and protected sections and passes
             // them into the parse methods and fields methods
@@ -52,7 +67,8 @@ public:
                 std::tie(scope, scopeContents) = scopeSection;
 
                 // Gather the methods in the scope section of the class and add them to the class object
-                parseMethods(scopeContents, classInfo, scope);
+                std::string nonMethodScopeContents = parseMethods(scopeContents, classInfo, scope);
+                parseFields(nonMethodScopeContents, classInfo, scope);
             }
 
             // TODO: Gather the fields in the class and add them to the class object
@@ -66,15 +82,33 @@ public:
     }
 
 private:
+
+    static std::string removeComments(std::string contents) {
+        std::smatch commentMatch;
+        std::string nonCommentContents = "";
+
+        while (std::regex_search(contents, commentMatch, commentRegex)) {
+            nonCommentContents.append(contents.substr(0, commentMatch.position()));
+            contents = commentMatch.suffix().str();
+        }
+        nonCommentContents.append(contents);
+        return nonCommentContents;
+    }
+
     /// Parses the given string for any methods and adds them to the given class object with the given scope.
     /// \param sectionContents The string to parse for methods
     /// \param classInfo The class object to put the parsed methods into
     /// \param scope The scope of the methods
-    static void parseMethods(std::string sectionContents, ClassInfo &classInfo, const std::string &scope) {
+    static std::string parseMethods(std::string sectionContents, ClassInfo &classInfo, const std::string &scope) {
         std::smatch methodMatch;
+        std::string nonMethodContents = "";
+
+        
         while (std::regex_search(sectionContents, methodMatch, methodRegex)) {
-            classInfo.addMethod(Method(methodMatch[2], methodMatch[1], scope, methodMatch[3]));
+            nonMethodContents.append(sectionContents.substr(0, methodMatch.position()));
+            classInfo.addMethod(Method(methodMatch[2], parseType(methodMatch[1]), scope, methodMatch[3]));
             sectionContents = methodMatch.suffix().str();
+
 
             // If the method has a body (opening and closing curly braces)...
             int i = 0;
@@ -89,6 +123,8 @@ private:
                 sectionContents = sectionContents.substr(closingMarkIndex, sectionContents.length() - closingMarkIndex + 1);
             }
         }
+        nonMethodContents.append(sectionContents);
+        return nonMethodContents;
     }
 
     /// Parses the given string for any fields and adds them to the given class object with the given scope.
@@ -97,11 +133,38 @@ private:
     /// \param scope The scope of the fields
     static void parseFields(std::string sectionContents, ClassInfo &classInfo, const std::string &scope) {
         // TODO: Actually figure out how to do this. (remove methods from string?)
-//        std::smatch fieldMatch;
-//        while (std::regex_search(sectionContents, fieldMatch, fieldRegex)) {
-//            classInfo.addField(Field(fieldMatch[2], fieldMatch[1], scope));
-//            sectionContents = fieldMatch.suffix().str();
-//        }
+        //std::cout << sectionContents << std::endl << std::endl;
+        std::smatch fieldMatch;
+        while (std::regex_search(sectionContents, fieldMatch, fieldRegex)) {
+            classInfo.addField(Field(fieldMatch[2], parseType(fieldMatch[1]), scope));
+            sectionContents = fieldMatch.suffix().str();
+        }
+    }
+
+    static Type parseType(std::string typeContents) {
+        std::smatch typeMatch;
+        std::regex_search(typeContents, typeMatch, typeRegex);
+        // Matches:
+        // 0 -> The whole match
+        // 1 -> The namespace if there is one
+        // 2 -> The actual object type (may be a collection)
+        // 3 -> The contents of the <> if there is one
+        // 4 -> The actual type of the contents of the <>
+        Type type;
+        if (collectionTypes.count(typeMatch[2])) {
+            type = Type(typeMatch[4], typeMatch[1], typeMatch[2]);
+        } else {
+            type = Type(typeMatch[2], typeMatch[1]);
+        }
+        return type;
+    }
+    
+    static void parseInheritance(std::string sectionContents, ClassInfo &classInfo) {
+        std::smatch inheritanceMatch;
+        while (std::regex_search(sectionContents, inheritanceMatch, inheritanceRegex)) {
+            classInfo.addBase(inheritanceMatch[1]);
+            sectionContents = inheritanceMatch.suffix().str();
+        }
     }
 
     /// Finds the indices for matching opening and closing marks in a string of text based on what marks are specified.

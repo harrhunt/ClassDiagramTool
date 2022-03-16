@@ -20,6 +20,7 @@ public:
     // add fields and methods
     void addField(Field field);
     void addMethod(Method method);
+    void addBase(std::string base);
 
     //getters and setters
     std::string getName();
@@ -28,6 +29,8 @@ public:
     std::vector<Field> getFields();
 
     std::vector<Method> getMethods();
+    
+    std::vector<std::string> getBases();
 
     /// Neatly prints the the info of the class
     void prettyPrint();
@@ -36,4 +39,5 @@ private:
     std::string name;
     std::vector<Field> fields;
     std::vector<Method> methods;
+    std::vector<std::string> bases;
 };

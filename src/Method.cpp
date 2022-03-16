@@ -9,7 +9,7 @@
 /// Stores information about a class' method
 /// Includes method name, return type, scope, and parameters
 
-Method::Method(std::string name, std::string type, std::string scope, std::string parameters){
+Method::Method(std::string name, Type type, std::string scope, std::string parameters){
     Method::name = name;
     Method::type = type;
     Method::scope = scope;
@@ -24,10 +24,10 @@ void Method::setName(std::string name){
     Method::name = name;
 }
 
-std::string Method::getType(){
+Type Method::getType(){
     return type;
 }
-void Method::setType(std::string type) {
+void Method::setType(Type type) {
     Method::type = type;
 }
 

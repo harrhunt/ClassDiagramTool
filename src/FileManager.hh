@@ -34,12 +34,28 @@ public:
         return fileContents.str();
     }
 
-    static std::vector<std::string> getFilePaths(std::string srcDirectory) {
+    static std::vector<std::string> getFilePaths(std::string srcDirectory, bool recursive) {
         std::vector<std::string> filePaths;
-        for (const auto &entry: std::filesystem::recursive_directory_iterator(srcDirectory)) {
-            std::string path = entry.path().string();
-            if (!entry.is_directory() && regex_match(path, std::regex(".*(h|hh|hxx)")))
-                filePaths.push_back(path);
+        
+        if (recursive) {
+            for (const auto& entry : std::filesystem::recursive_directory_iterator(srcDirectory)) {
+                std::string path = entry.path().string();
+
+                if (!entry.is_directory() && regex_match(path, std::regex(R"(.*\.(?:h|hh|hxx)$)"))) {
+                    //std::cout << path << std::endl;
+                    filePaths.push_back(path);
+                }
+            }
+        }
+        else {
+            for (const auto& entry : std::filesystem::directory_iterator(srcDirectory)) {
+                std::string path = entry.path().string();
+
+                if (!entry.is_directory() && regex_match(path, std::regex(R"(.*\.(?:h|hh|hxx)$)"))) {
+                    //std::cout << path << std::endl;
+                    filePaths.push_back(path);
+                }
+            }
         }
 
         return filePaths;

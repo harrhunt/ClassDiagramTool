@@ -14,7 +14,7 @@
 template<class T>
 class Graph {
 public:
-    Graph();
+    //Graph();
 
     //add and remove nodes
     void addNode(Node<T> node) {
