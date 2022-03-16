@@ -2,7 +2,8 @@
 /// \Authors Hunter, Davis, Patience
 /// \file tst/tstMethod.hh
 /// \note A test function to determine if Method is getting and setting values correctly
-///
+//
+/*
 #include "gtest/gtest.h"
 #include "Method.hh"
 #include <assert.h>
@@ -29,3 +30,4 @@ TEST(tstMethod, setGetParameters){
     EXPECT_NE(method1.getParameters(), "int diff");
 
 }
+*/
