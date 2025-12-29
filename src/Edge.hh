@@ -41,7 +41,7 @@ public:
         return endNode;
     }
     void setEndNode(Node<T> endNode) {
-        this->ndNode = endNode;
+        this->endNode = endNode;
     }
 
     Type getType() {
